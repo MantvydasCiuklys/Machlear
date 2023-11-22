@@ -7,6 +7,7 @@
     display: flex;
     width: 100%;
     height: 75vh;
+    position: relative;
 }
 .map {
     width: 100%;
@@ -18,4 +19,24 @@
     width: 100%;
     width: 100%;
     height: 75vh;
+}
+
+.container .map {
+    position: relative;
+}
+  
+.map-inputs {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 5; /* Ensures the inputs are above the map */
+}
+  
+.map-inputs input {
+    margin-bottom: 5px;
+    /* Add additional styling as needed */
+}
+.map-inputs button {
+    margin-bottom: 5px;
+    /* Add additional styling as needed */
 }
