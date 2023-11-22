@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useDemoModal } from "@/components/home/demo-modal";
-import { useLoadScript, GoogleMap } from "react-google-maps";
 import Popover from "@/components/shared/popover";
 import Tooltip from "@/components/shared/tooltip";
 import { ChevronDown } from "lucide-react";
