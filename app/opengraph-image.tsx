@@ -10,7 +10,7 @@ export default async function OG() {
     new URL("./fonts/SF-Pro-Display-Medium.otf", import.meta.url),
   ).then((res) => res.arrayBuffer());
 
-  return new ImageResponse(
+  return new (ImageResponse as any)(
     (
       <div
         style={{
