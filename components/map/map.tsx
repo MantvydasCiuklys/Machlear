@@ -176,34 +176,45 @@ export default function Map() {
 
       <div className="map-inputs">
       {directions ? 
-        <div style={{width:"100%", height:"100%", backgroundColor:"white"}}>
-          <div className="parentDirectionsConfirmButtonDiv">
-            <div>
-              {`[${startLocation}]`}
-            </div>
-            <div>
-              {`[${endLocation}]`}
-            </div>
+        <div style={{width:"100%", height:"100%"}}>
+          <div className="directionsConfirmButtonDiv">
+            <input
+                className="startLocationInput"
+                ref={startRef}
+                type="text"
+                placeholder="Start Location"
+                value={startLocation}
+                onChange={(e) => setStartLocation(e.target.value)}
+            />
+            <input
+                className="endLocationInput"
+                ref={endRef}
+                type="text"
+                placeholder="End Location"
+                value={endLocation}
+                onChange={(e) => setEndLocation(e.target.value)}
+            /> 
           </div>
           <div className="directionsConfirmButtonDiv">
-                <button className="directionsConfirmButton" onClick={() => {/* handle confirm action here */}}>
-                  <FontAwesomeIcon icon={faCheckCircle} className="icons" style={{ color: 'green' }} />
-                </button>
-                <button className="directionsConfirmButton" onClick={() => {
-                  setSelectedEndLocation(null);
-                  setSelectedStartLocation(null);
-                  setStartLocation('');
-                  setEndLocation('');
-                  setDirections(null);
-                  setResetAutocomplete(prev => !prev); // Toggle the flag
-                }}>
-                  <FontAwesomeIcon icon={faTimesCircle} className="icons" style={{ color: 'red' }} />
-                </button>
-              </div>
+            <button className="directionsConfirmButton" onClick={() => {/* handle confirm action here */}}>
+              <FontAwesomeIcon icon={faCheckCircle} className="icons" style={{ color: 'green'}} />
+            </button>
+            <button className="directionsConfirmButton" onClick={() => {
+              setSelectedEndLocation(null);
+              setSelectedStartLocation(null);
+              setStartLocation('');
+              setEndLocation('');
+              setDirections(null);
+              setResetAutocomplete(prev => !prev); // Toggle the flag
+            }}>
+              <FontAwesomeIcon icon={faTimesCircle} className="icons" style={{ color: 'red' }} />
+            </button>
+          </div>
         </div>
       :
-      <>
+      <div className="directionsConfirmButtonDiv">
         <input
+            className="startLocationInput"
             ref={startRef}
             type="text"
             placeholder="Start Location"
@@ -211,13 +222,14 @@ export default function Map() {
             onChange={(e) => setStartLocation(e.target.value)}
         />
         <input
+            className="endLocationInput"
             ref={endRef}
             type="text"
             placeholder="End Location"
             value={endLocation}
             onChange={(e) => setEndLocation(e.target.value)}
         /> 
-      </>
+      </div>
       }
       </div>
     </div>

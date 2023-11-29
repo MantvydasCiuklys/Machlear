@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
 
 
 .container {
@@ -22,6 +23,42 @@
     background-color: transparent;
     width: 100%;
 }
+
+.startLocationInput, .endLocationInput {  
+    font-family: 'Roboto', sans-serif;
+    width: 40%;
+    padding: 10px;
+    border-width: 3px;
+    border-radius: 10px; /* Rounded borders */
+    border-color: rgb(153, 238, 238);
+    font-size: 16px;
+    background-color: rgba(255, 255, 255, 0.8); /* Subtle background */
+    transition: border-color 0.3s, box-shadow 0.3s; /* Smooth transition */
+    font-weight:500;
+}
+
+
+.startLocationInput {
+    margin-right: 2%;
+}
+
+.endLocationInput {
+    margin-left: 2%;
+}
+
+.startLocationInput::placeholder, .endLocationInput::placeholder {
+    color: #999; /* Placeholder text color */
+    opacity: 1; /* Full opacity */
+}
+
+.startLocationInput:focus, .endLocationInput:focus {
+    outline: none;
+    border-color: #59b3a2; /* Highlight color */
+    box-shadow: 0 0 8px rgba(89, 179, 162, 0.6); /* Focus state shadow */ 
+    background-color: rgba(255, 255, 255, 1); /* Subtle background */
+}
+
+
 .directionsConfirmButton {
     width: 24;
     margin-top: 1%;
@@ -89,3 +126,46 @@
     margin-bottom: 5px;
     /* Add additional styling as needed */
 }
+
+
+
+
+
+
+/* Style the container of the dropdown items */
+.pac-container {
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    background-color: #fff; /* Or any other color */
+    font-family: 'Roboto', sans-serif; /* Custom font */
+  }
+  
+  /* Style each item in the dropdown */
+  .pac-item {
+    padding: 10px;
+    cursor: pointer;
+    text-align: left;
+  }
+  
+  /* Style the query portion of each item */
+  .pac-item-query {
+    font-weight: bold;
+  }
+  
+  /* Style the matched portion in the dropdown items */
+  .pac-matched {
+    color: #55aaff;
+  }
+  .pac-item:hover {
+    background-color: #efefef; /* Or any other highlight color */
+  }
+  .pac-container {
+    border-radius: 8px !important;
+    /* other styles */
+  }
+  .pac-item {
+    transition: background-color 0.2s ease-in-out;
+    /* other styles */
+  }
+  
