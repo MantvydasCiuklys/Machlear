@@ -10,7 +10,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 
 
-export default function Map() { 
+export default function Map({
+  setContext,
+  setMainStart,
+  setMainEnd
+}:{
+  setContext: Function;
+  setMainStart: Function;
+  setMainEnd: Function;
+}) { 
   const [zoom, setZoom] = useState(14); // Default zoom level
   const [startLocation, setStartLocation] = useState("");
   const [endLocation, setEndLocation] = useState("");
@@ -196,7 +204,11 @@ export default function Map() {
             /> 
           </div>
           <div className="directionsConfirmButtonDiv">
-            <button className="directionsConfirmButton" onClick={() => {/* handle confirm action here */}}>
+            <button className="directionsConfirmButton" onClick={() => {
+              setContext("Questions");
+              setMainStart(selectedStartLocation);
+              setMainEnd(selectedEndLocation)
+              }}>
               <FontAwesomeIcon icon={faCheckCircle} className="icons" style={{ color: 'green'}} />
             </button>
             <button className="directionsConfirmButton" onClick={() => {
