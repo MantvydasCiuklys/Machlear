@@ -6,6 +6,7 @@ import {useLoadScript} from "@react-google-maps/api";
 import Map from "@/components/map/map";
 import Popover from "@/components/shared/popover";
 import Tooltip from "@/components/shared/tooltip";
+import StreetView from "@/components/map/streetview";
 import { ChevronDown } from "lucide-react";
 
 export default function ComponentGrid() {
@@ -17,6 +18,8 @@ export default function ComponentGrid() {
   })
   if(!isLoaded)  return <div>Loading...</div>
   return (
-      <Map/>
+      //<Map/>
+    <StreetView latitude={40.748817} longitude={-73.985428} />
+        
   );
 }

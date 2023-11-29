@@ -4,18 +4,25 @@ import {
   Marker,
   DirectionsRenderer,
   Circle,
-  MarkerClusterer,
+  MarkerClusterer
 } from "@react-google-maps/api";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheckCircle, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 
-type LatLngLiteral = google.maps.LatLngLiteral;
-type DirectionsResult = google.maps.DirectionsResult;
-type MapOptions = google.maps.MapOptions;
 
-export default function Map() {
+export default function Map() { 
+  const [zoom, setZoom] = useState(14); // Default zoom level
   const [startLocation, setStartLocation] = useState("");
-  const [zoom, setZoom] = useState(12); // Default zoom level
   const [endLocation, setEndLocation] = useState("");
-  const [tempMarker, setTempMarker] = useState<LatLngLiteral|null>(null);
+
+  const [selectedStartLocation, setSelectedStartLocation] = useState<LatLngLiteral|null>(null);
+  const [selectedEndLocation, setSelectedEndLocation] = useState<LatLngLiteral|null>(null);
+
+  const [resetAutocomplete, setResetAutocomplete] = useState(false);
+
+  type LatLngLiteral = google.maps.LatLngLiteral;
+  type DirectionsResult = google.maps.DirectionsResult;
+  type MapOptions = google.maps.MapOptions;
   const startRef = useRef(null);
   const endRef = useRef(null);
   const [directions, setDirections] = useState<DirectionsResult | null>(null);
@@ -31,61 +38,102 @@ export default function Map() {
   );
   const onLoad = useCallback((map:any) => (mapRef.current = map), []);
   useEffect(() => {
-    const setupAutocomplete = (inputRef:any, setLocation:any) => {
+    const setupAutocomplete = (inputRef:any, setLocation:any, setLocationName: any) => {
       if (!inputRef.current) return;
 
-      const autocomplete = new google.maps.places.Autocomplete(inputRef.current);
-      autocomplete.setFields(["address_components", "geometry", "formatted_address"]);
+      const autocomplete = new google.maps.places.Autocomplete(inputRef.current, {
+        componentRestrictions: { country: "lt" }, // Replace 'us' with your desired country code
+        fields: ["address_components", "geometry", "formatted_address"],
+      });
+
+
       autocomplete.addListener("place_changed", () => {
         const place = autocomplete.getPlace();
         if (!place.geometry || !place.geometry.location) {
           console.log("No details available for input: '" + place.name + "'");
           return;
         }
-        // Update the temporary marker and zoom in on the selected place
-        setTempMarker({
-          lat: place.geometry.location.lat(),
-          lng: place.geometry.location.lng()
-        });
 
         if (mapRef.current) {
           mapRef.current.panTo(place.geometry.location);
-          setZoom(15); // Adjust zoom level as needed
+          setZoom(14); // Adjust zoom level as needed
         }
 
         // Update the location state only when a place is selected
-        setLocation(place.formatted_address);
+        setLocation({
+          lat: place.geometry.location.lat(),
+          lng: place.geometry.location.lng()
+        });
+        setLocationName(place.formatted_address);
       });
     };
 
-    setupAutocomplete(startRef, setStartLocation);
-    setupAutocomplete(endRef, setEndLocation);
-  }, []);
+    setupAutocomplete(startRef, setSelectedStartLocation, setStartLocation);
+    setupAutocomplete(endRef, setSelectedEndLocation, setEndLocation);
+  }, [resetAutocomplete]);
 
   useEffect(() => {
     if (!startLocation || !endLocation) return;
     setDirections(null);
     const directionsService = new google.maps.DirectionsService();
+    if(!selectedStartLocation && !selectedEndLocation) return;
+    
     directionsService.route(
       {
-        origin: startLocation,
-        destination: endLocation,
-        travelMode: google.maps.TravelMode.DRIVING,
+        origin: selectedEndLocation == null ? "" : selectedEndLocation,
+        destination: selectedStartLocation == null ? "" : selectedStartLocation,
+        travelMode: google.maps.TravelMode.WALKING,
       },
       (result, status) => {
         if (status === google.maps.DirectionsStatus.OK && result) {
           setDirections(result);
-          // Clear the input fields after setting the directions
-          setStartLocation('');
-          setEndLocation('');
         } else {
-          console.error(`Error fetching directions ${result}`);
+          if(status !== google.maps.DirectionsStatus.NOT_FOUND){
+            console.error(`${status} - Error fetching directions ${result}`);
+          }
         }
       }
     );
-  }, [startLocation, endLocation]);
+  }, [selectedStartLocation, selectedEndLocation]);
 
-
+  const handleStartMarkerDragEnd = (event:any) => {
+    const newLat = event.latLng.lat();
+    const newLng = event.latLng.lng();
+    setSelectedStartLocation({ lat: newLat, lng: newLng });
+  
+    // Reverse geocoding to get the address from lat and lng
+    const geocoder = new google.maps.Geocoder();
+    geocoder.geocode({ location: { lat: newLat, lng: newLng } }, (results, status) => {
+      if (status === "OK") {
+        if (results && results[0]) {
+          setStartLocation(results[0].formatted_address);
+        } else {
+          console.log('No results found');
+        }
+      } else {
+        console.log('Geocoder failed due to: ' + status);
+      }
+    });
+  };
+  const handleEndMarkerDragEnd = (event:any) => {
+    const newLat = event.latLng.lat();
+    const newLng = event.latLng.lng();
+    setSelectedEndLocation({ lat: newLat, lng: newLng });
+  
+    // Reverse geocoding to get the address from lat and lng
+    const geocoder = new google.maps.Geocoder();
+    geocoder.geocode({ location: { lat: newLat, lng: newLng } }, (results, status) => {
+      if (status === "OK") {
+        if (results && results[0]) {
+          setEndLocation(results[0].formatted_address);
+        } else {
+          console.log('No results found');
+        }
+      } else {
+        console.log('Geocoder failed due to: ' + status);
+      }
+    });
+  };
   return (
   <div className="container">
     <div className="map">
@@ -96,29 +144,82 @@ export default function Map() {
         options={options}
         onLoad={onLoad}
       >
-        {tempMarker && (
-          <Marker position={tempMarker} />
+        {selectedStartLocation && (
+           <Marker 
+           position={selectedStartLocation} 
+           draggable={true} 
+           onDragEnd={handleStartMarkerDragEnd} 
+           icon={{
+            url: "https://cdn-icons-png.flaticon.com/512/10124/10124107.png", // URL of the green marker icon
+            scaledSize: new window.google.maps.Size(44, 44) // Adjusts the size of the icon
+          }} 
+           />
+        )}
+        {selectedEndLocation && (
+          <Marker 
+          position={selectedEndLocation} 
+          draggable={true} 
+          onDragEnd={handleEndMarkerDragEnd} 
+          icon={{
+            url: "https://cdn-icons-png.flaticon.com/512/11269/11269561.png ", // URL of the red marker icon
+            scaledSize: new window.google.maps.Size(44, 44) // Adjusts the size of the icon
+          }} 
+          />
         )}
         {directions && (
-          <DirectionsRenderer directions={directions} />
+          <DirectionsRenderer 
+            directions={directions} 
+            options={{ suppressMarkers: true }} 
+          />
         )}
       </GoogleMap>
+
       <div className="map-inputs">
-          <input
+      {directions ? 
+        <div style={{width:"100%", height:"100%", backgroundColor:"white"}}>
+          <div className="parentDirectionsConfirmButtonDiv">
+            <div>
+              {`[${startLocation}]`}
+            </div>
+            <div>
+              {`[${endLocation}]`}
+            </div>
+          </div>
+          <div className="directionsConfirmButtonDiv">
+                <button className="directionsConfirmButton" onClick={() => {/* handle confirm action here */}}>
+                  <FontAwesomeIcon icon={faCheckCircle} className="icons" style={{ color: 'green' }} />
+                </button>
+                <button className="directionsConfirmButton" onClick={() => {
+                  setSelectedEndLocation(null);
+                  setSelectedStartLocation(null);
+                  setStartLocation('');
+                  setEndLocation('');
+                  setDirections(null);
+                  setResetAutocomplete(prev => !prev); // Toggle the flag
+                }}>
+                  <FontAwesomeIcon icon={faTimesCircle} className="icons" style={{ color: 'red' }} />
+                </button>
+              </div>
+        </div>
+      :
+      <>
+        <input
             ref={startRef}
             type="text"
             placeholder="Start Location"
             value={startLocation}
             onChange={(e) => setStartLocation(e.target.value)}
-          />
-          <input
+        />
+        <input
             ref={endRef}
             type="text"
             placeholder="End Location"
             value={endLocation}
             onChange={(e) => setEndLocation(e.target.value)}
-          />
-        </div>
+        /> 
+      </>
+      }
+      </div>
     </div>
   </div>
   )

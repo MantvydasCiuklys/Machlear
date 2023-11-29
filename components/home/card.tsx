@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 import ReactMarkdown from "react-markdown";
 
 export default function Card({
-  demo,
+  demo
 }: {
   demo: ReactNode;
 }) {
