@@ -105,7 +105,7 @@ export default function Questions({
     const maxRadius = 200; 
     const totalLocations = 4; // total random locations to generate
     const progress = (locationData.length / totalLocations) * 100;
-
+    let sliderClassName = "";
     const handleSliderChange = (event:any) => {
         setSliderValue(event.target.value);
       };
@@ -171,21 +171,24 @@ export default function Questions({
         <div className="my-4 grid w-full h-full max-h-screen-xl max-w-screen-xl animate-fade-up grid-cols-1 gap-5 px-5 md:grid-cols-3 xl:px-0">
             <div className={`relative col-span-4 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-md`}>
             <div className="flex items-center justify-center" style={{ height: "5vh" }}>
-                <div onClick={handleConfirm} className="flex items-center justify-center bg-green-500 rounded text-white" style={{marginLeft:"1%", width: "18%",marginTop:"2.5%", height:"140%", cursor: "pointer" }}>
-                    Confirm
+                <div 
+                onClick={handleConfirm} 
+                className={`flex items-center justify-center bg-green-500 rounded text-white confirmPictureButton ${sliderValue < 30 ? 'low' : sliderValue < 60 ? 'medium' : 'high'}`}
+                >
+                    Rate
                 </div>
-                <div style={{width: "100%", height: "5vh"}} className="flex items-center justify-center">
+                <div className="flex items-center justify-center slider-container">
                     <input
                         type="range"
                         min="0"
                         max="100"
                         value={sliderValue}
                         onChange={handleSliderChange}
-                        className="slider"
+                        className={`slider questionsSlider ${sliderValue < 30 ? 'low' : sliderValue < 60 ? 'medium' : 'high'}`}
                         style={{width: "calc(100% - 2rem)",height:"200%", margin: "0 1rem"}} // Adjusts width and margin
                     />
                 </div>
-                <div className="progress-circle-container" style={{ width: '18%', marginLeft: '1%', marginTop: '2.5%', height: '140%' }}>
+                <div className="progress-circle-container progressCircle">
                     <svg className="progress-circle" viewBox="0 0 36 36">
                         <path className="circle-bg"
                         d="M18 2.0845
@@ -202,9 +205,22 @@ export default function Questions({
                     </svg>
                 </div>
             </div>
-                <div style={{textAlign: "center", marginLeft:"12%",marginTop: "10px"}}> {/* Centers the text */}
-                    <p>Slider Value: {sliderValue}%</p>
-                </div>
+                {
+                    sliderValue < 30 ?
+                    <div style={{textAlign: "center", marginLeft:"8%", fontSize:"40px", fontWeight:"bold", color:"red"}}> {/* Centers the text */}
+                        <p>{sliderValue}%</p>
+                    </div>
+                    :
+                    sliderValue < 60 ?
+                    <div style={{textAlign: "center", marginLeft:"8%", fontSize:"40px", fontWeight:"bold", color:"rgb(199, 182, 33)"}}> {/* Centers the text */}
+                        <p>{sliderValue}%</p>
+                    </div>
+                    :
+                    <div style={{textAlign: "center", marginLeft:"8%", fontSize:"40px", fontWeight:"bold", color:"green"}}> {/* Centers the text */}
+                        <p>{sliderValue}%</p>
+                    </div>
+                }
+                
             </div>
             <div className={`relative col-span-4 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-md mainButtonExpress`}>    
                     <StreetView latitude={currentLocation.lat} longitude={currentLocation.lng} />                  
@@ -213,7 +229,7 @@ export default function Questions({
         :
         <div className="my-4 grid w-full h-full max-h-screen-xl max-w-screen-xl animate-fade-up grid-cols-1 gap-5 px-5 md:grid-cols-3 xl:px-0">
             <div className={`relative col-span-4 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-md mainButtonExpress`}>   
-                <div onClick={handleConfirm} className="flex items-center justify-center bg-green-500 rounded text-white" style={{width: "100%", height:"100%", cursor: "pointer" }}>
+                <div onClick={handleConfirm} className="flex items-center justify-center bg-green-500 rounded text-white questionsStartButton">
                     We will ask you to rate some pictures, click here to continue
                 </div>
             </div>
