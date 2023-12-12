@@ -2,6 +2,7 @@
 import Start from "../components/home/start"
 import Directions from "../components/home/directions"
 import Questions from "../components/home/questions";
+import MapRoute from "../components/map/mapRoute";
 import {useState} from "react"
 import { useLoadScript } from "@react-google-maps/api";
 import { start } from "repl";
@@ -35,7 +36,7 @@ export default function Home() {
     case "Questions":
       return (<Questions startPoint={startLocation} endPoint={endLocation} setMainLocationData={setLocationData} setContext={setContext}></Questions>)
     case "Gathered":
-      return (<div>Gathered</div>)
+      return (<MapRoute setContext={setContext} startLocation={startLocation} endLocation={endLocation} locationData={locationData}></MapRoute>)
   } 
 }
 

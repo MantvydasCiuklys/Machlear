@@ -93,8 +93,8 @@ export default function Questions({
     const [startLocation, setStartLocation] = useState("");
     const [endLocation, setEndLocation] = useState("");
     const [sliderValue, setSliderValue] = useState(0); // Slider state
-    const radius = 200; // radius in meters
-    const totalLocations = 20; // total random locations to generate
+    const radius = 10; // radius in meters
+    const totalLocations = 4; // total random locations to generate
     const progress = (locationData.length / totalLocations) * 100;
 
     const handleSliderChange = (event:any) => {
@@ -121,7 +121,7 @@ export default function Questions({
           if(currentLocation)
             setLocationData([...locationData, { ...currentLocation, percentage: sliderValue }]);
             console.log(locationData);
-            setMainLocationData(locationData);
+            setMainLocationData([...locationData, { ...currentLocation, percentage: sliderValue }]);
             setContext("Gathered");
         }
         setSliderValue(0)
