@@ -33,7 +33,7 @@ interface LocationData {
     });
   }
 
-  function getRandomPointNearPath(pathPoints:any, radius:any, usedIndices:any) {
+  function getRandomPointNearPath(pathPoints:any, minRadius:any, maxRadius:any, usedIndices:any) {
     let randomIndex;
     let attempts = 0;
     do {
@@ -49,30 +49,38 @@ interface LocationData {
     usedIndices.push(randomIndex); // Add the index to the list of used indices
   
     const center = pathPoints[randomIndex];
-    return getRandomLocation(center, radius);
+    return getRandomLocation(center, minRadius, maxRadius);
   }
   
-function getRandomLocation(center:any, radius:any) {
+  function getRandomLocation(center:any, minRadius:any, maxRadius:any) {
     const y0 = center.lat();
     const x0 = center.lng();
-    const rd = radius / 111300; // about 111300 meters in one degree
-  
-    const u = Math.random();
-    const v = Math.random();
-  
-    const w = rd * Math.sqrt(u);
+
+    // Convert radii from meters to degrees
+    const minRd = minRadius / 111300; // about 111300 meters in one degree
+    const maxRd = maxRadius / 111300;
+
+    let w;
+    let u, v;
+    do {
+        u = Math.random();
+        v = Math.random();
+
+        w = minRd + (maxRd - minRd) * Math.sqrt(u);
+    } while (w > maxRd); 
+
     const t = 2 * Math.PI * v;
     const x = w * Math.cos(t);
     const y = w * Math.sin(t);
-  
+
     // Adjust the x-coordinate for the shrinking of the east-west distances
     const xp = x / Math.cos(y0);
-  
+
     const newlat = y + y0;
-    const newlon = x + x0;
-  
+    const newlon = xp + x0;
+
     return { lat: newlat, lng: newlon };
-  }
+}
 
 export default function Questions({
     startPoint,
@@ -93,7 +101,8 @@ export default function Questions({
     const [startLocation, setStartLocation] = useState("");
     const [endLocation, setEndLocation] = useState("");
     const [sliderValue, setSliderValue] = useState(0); // Slider state
-    const radius = 10; // radius in meters
+    const minRadius = 20; 
+    const maxRadius = 200; 
     const totalLocations = 4; // total random locations to generate
     const progress = (locationData.length / totalLocations) * 100;
 
@@ -114,7 +123,7 @@ export default function Questions({
           // Save current data and generate next location
           if(currentLocation)
           setLocationData([...locationData, { ...currentLocation, percentage: sliderValue }]);
-          const nextLocation = getRandomPointNearPath(pathPoints, radius, usedIndices);
+          const nextLocation = getRandomPointNearPath(pathPoints, minRadius,maxRadius, usedIndices);
           setCurrentLocation(nextLocation);
         } else {
           // Last location - show completion alert and save data
