@@ -223,7 +223,12 @@
     margin-top:4%;
     height:180%;
     border-radius: 50%;
+    opacity: 0.5;
     cursor: pointer;
+  }
+
+  .confirmPictureButton:hover{
+    opacity: 1;
   }
     .confirmPictureButton.low {
         background: #c98484; /* Track background */

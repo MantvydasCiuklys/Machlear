@@ -102,8 +102,8 @@ export default function Questions({
     const [endLocation, setEndLocation] = useState("");
     const [sliderValue, setSliderValue] = useState(0); // Slider state
     const minRadius = 20; 
-    const maxRadius = 200; 
-    const totalLocations = 4; // total random locations to generate
+    const maxRadius = 60; 
+    const totalLocations = 20; // total random locations to generate
     const progress = (locationData.length / totalLocations) * 100;
     let sliderClassName = "";
     const handleSliderChange = (event:any) => {
