@@ -91,7 +91,7 @@ export default function MapRoute({
            position={startLocation} 
            draggable={false} 
            icon={{
-            url: "https://cdn-icons-png.flaticon.com/512/10124/10124107.png", // URL of the green marker icon
+            url: "/a.png", // URL of the green marker icon
             scaledSize: new window.google.maps.Size(44, 44) // Adjusts the size of the icon
           }} 
            />
@@ -101,7 +101,7 @@ export default function MapRoute({
           position={endLocation} 
           draggable={false} 
           icon={{
-            url:"/location.png",
+            url:"/b.png",
            // url: "https://cdn-icons-png.flaticon.com/512/11269/11269561.png", // URL of the red marker icon
             scaledSize: new window.google.maps.Size(44, 44) // Adjusts the size of the icon
           }} 
@@ -113,7 +113,7 @@ export default function MapRoute({
               position={{ lat: location.lat, lng: location.lng }}
               draggable={false}  
               icon={{ 
-                url: "https://cdn-icons-png.flaticon.com/512/10124/10124107.png", // URL of the green marker icon
+                url: "/info.png", // URL of the green marker icon
                 scaledSize: new window.google.maps.Size(44, 44) // Adjusts the size of the icon
               }} 
             />

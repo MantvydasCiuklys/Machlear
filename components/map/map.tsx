@@ -158,7 +158,7 @@ export default function Map({
            draggable={true} 
            onDragEnd={handleStartMarkerDragEnd} 
            icon={{
-            url: "https://cdn-icons-png.flaticon.com/512/10124/10124107.png", // URL of the green marker icon
+            url: "/a.png", // URL of the green marker icon
             scaledSize: new window.google.maps.Size(44, 44) // Adjusts the size of the icon
           }} 
            />
@@ -169,7 +169,7 @@ export default function Map({
           draggable={true} 
           onDragEnd={handleEndMarkerDragEnd} 
           icon={{
-            url: "https://cdn-icons-png.flaticon.com/512/11269/11269561.png", // URL of the red marker icon
+            url: "/b.png", // URL of the red marker icon
             scaledSize: new window.google.maps.Size(44, 44) // Adjusts the size of the icon
           }} 
           />
