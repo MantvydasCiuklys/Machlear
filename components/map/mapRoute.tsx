@@ -115,8 +115,10 @@ export default function MapRoute({
   };
 
   const onTripFinish = () => {
+    
     updateUserWallet();
     setContext("Congrats"); // Show the modal when the trip finishes
+    document.dispatchEvent(new CustomEvent('prepareWalletUpdate'));
   };
 
   const updateUserWallet = async () => {
@@ -150,7 +152,6 @@ export default function MapRoute({
                       },
                       body: JSON.stringify({ walletId:currentWalletData.id, co2Saved: updatedCo2Saved, balance: updatedBalance }),
                     });
-                    
                     document.dispatchEvent(new CustomEvent('walletUpdated'));
                   }
 

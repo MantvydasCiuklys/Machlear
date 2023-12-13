@@ -16,7 +16,7 @@ interface IWallet {
 export default function NavBar({ session }: { session: Session | null }) {
   const { SignInModal, setShowSignInModal } = useSignInModal();
   const scrolled = useScroll(50);
-  const [wallet, setWallet] = useState<IWallet>({Balance:0,CO2:0});
+  const [wallet, setWallet] = useState<IWallet|null>(null);
 
   const fetchWalletData = async () => {
     if (session) {
@@ -81,10 +81,16 @@ export default function NavBar({ session }: { session: Session | null }) {
     const handleWalletUpdate = () => {
       fetchWalletData(); // Refetch wallet data
     };
-  
+
+    const prepareWallet = () => {
+      setWallet(null)
+    }
+
+    document.addEventListener('prepareWalletUpdate', prepareWallet);
     document.addEventListener('walletUpdated', handleWalletUpdate);
   
     return () => {
+      document.addEventListener('prepareWalletUpdate', prepareWallet);
       document.removeEventListener('walletUpdated', handleWalletUpdate);
     };
   }, [fetchWalletData]);
@@ -107,15 +113,21 @@ export default function NavBar({ session }: { session: Session | null }) {
       >
         <div className="mx-5 flex h-16 max-w-screen-xl items-center justify-between w-full">
           {
-            session ?(
-          <div className="WalletInformation">
-            <div className="WalletEmissions">
-              CO2 Saved: {(wallet.CO2/1000).toFixed(2) ?? "0"}kg
-            </div>
-            <div className="WalletBalance">
-              Machlear Balance: {wallet.Balance.toFixed(2) ?? "0"}$
-            </div>
-          </div> ):
+            session ?
+            (
+              wallet ?
+              (
+                <div className="WalletInformation">
+                  <div className="WalletEmissions">
+                    CO2 Saved: {(wallet.CO2/1000).toFixed(2) ?? "0"}kg
+                  </div>
+                  <div className="WalletBalance">
+                    Machlear Balance: {wallet.Balance.toFixed(2) ?? "0"}$
+                  </div>
+                </div> 
+              ):
+              <div>Loading...</div>
+            ):
           <div></div>
           }
           <div>
