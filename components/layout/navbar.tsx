@@ -119,10 +119,10 @@ export default function NavBar({ session }: { session: Session | null }) {
               (
                 <div className="WalletInformation">
                   <div className="WalletEmissions">
-                    CO2 Saved: {(wallet.CO2/1000).toFixed(2) ?? "0"}kg
+                    CO2 Saved: {<br></br>}{(wallet.CO2/1000).toFixed(2) ?? "0"}kg
                   </div>
                   <div className="WalletBalance">
-                    Machlear Balance: {wallet.Balance.toFixed(2) ?? "0"}$
+                    Machlear Balance: {<br></br>}{wallet.Balance.toFixed(2) ?? "0"}$
                   </div>
                 </div> 
               ):

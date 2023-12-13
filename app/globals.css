@@ -317,7 +317,101 @@
 }
 
 
+
+/* Style for the WalletInformation container */
+.WalletInformation {
+  display: flex; /* Enable flexbox */
+  justify-content: space-between; /* Space out the child elements */
+  align-items: center; /* Align items vertically in the center */
+  height: 80%;
+  width: 40%;
+  background-color: transparent;
+  font-family: Arial, sans-serif; /* Font styling */
+}
+
+/* Style for the CO2 Emissions section */
+.WalletEmissions {
+  color: #4caf50; /* Green color to represent balance/finance */
+  font-size: 14px; /* Slightly smaller font than the emissions */
+  font-weight: bold;
+  width: 50%;
+  border: 1px solid #ddd; /* Light grey border */
+  border-radius: 5px; /* Rounded corners */  
+  padding-left: 5px;
+  padding-top: 1px;
+  padding-bottom: 1px;
+  margin-right: 10%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+/* Style for the Balance section */
+.WalletBalance {
+  color: #4caf50; /* Green color to represent balance/finance */
+  font-size: 14px; /* Slightly smaller font than the emissions */
+  font-weight: bold;
+  width: 50%;
+  border: 1px solid #ddd; /* Light grey border */
+  border-radius: 5px; /* Rounded corners */  
+  padding-left: 5px;
+  padding-top: 1px;
+  padding-bottom: 1px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.congratulations-modal {
+  position: relative;
+  /* Other styling as needed */
+}
+.fireworks-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+
   @media (max-width: 480px) {
+    /* Style for the WalletInformation container */
+    .WalletInformation {
+      display: flex; /* Enable flexbox */
+      justify-content: space-between; /* Space out the child elements */
+      align-items: center; /* Align items vertically in the center */
+      height: 80%;
+      width: 80%;
+      background-color: transparent;
+      font-family: Arial, sans-serif; /* Font styling */
+    }
+
+    /* Style for the CO2 Emissions section */
+    .WalletEmissions {
+      color: #4caf50; /* Green color to represent balance/finance */
+      font-size: 12px; /* Slightly smaller font than the emissions */
+      font-weight: bold;
+      width: 50%;
+      border: 1px solid #ddd; /* Light grey border */
+      border-radius: 5px; /* Rounded corners */  
+      padding-left: 5px;
+      padding-top: 1px;
+      padding-bottom: 1px;
+      margin-right: 10%;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    }
+
+    /* Style for the Balance section */
+    .WalletBalance {
+      color: #4caf50; /* Green color to represent balance/finance */
+      font-size: 12px; /* Slightly smaller font than the emissions */
+      font-weight: bold;
+      width: 50%;
+      border: 1px solid #ddd; /* Light grey border */
+      border-radius: 5px; /* Rounded corners */  
+      padding-left: 5px;
+      padding-top: 1px;
+      padding-bottom: 1px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    }
   .progressCircle {
     width: 30%;
     margin-left: 1%;
@@ -355,47 +449,4 @@
     .confirmPictureButton.high {
         background: green; /* Track background */
     }
-}
-
-
-/* Style for the WalletInformation container */
-.WalletInformation {
-  display: flex; /* Enable flexbox */
-  justify-content: space-between; /* Space out the child elements */
-  align-items: center; /* Align items vertically in the center */
-  border: 1px solid #ddd; /* Light grey border */
-  border-radius: 5px; /* Rounded corners */
-  padding: 20px; /* Padding inside the container */
-  height: 80%;
-  width: 60%;
-  background-color: transparent;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-  font-family: Arial, sans-serif; /* Font styling */
-}
-
-/* Style for the CO2 Emissions section */
-.WalletEmissions {
-  color: #4caf50; /* Green color to represent balance/finance */
-  font-size: 16px; /* Slightly smaller font than the emissions */
-  width: 50%;
-}
-
-/* Style for the Balance section */
-.WalletBalance {
-  color: #4caf50; /* Green color to represent balance/finance */
-  font-size: 16px; /* Slightly smaller font than the emissions */
-  width: 50%;
-}
-
-.congratulations-modal {
-  position: relative;
-  /* Other styling as needed */
-}
-.fireworks-canvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
 }
