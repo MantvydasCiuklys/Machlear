@@ -26,7 +26,6 @@ export default function MapRoute({
   endLocation:LatLngLiteral|null;
 }) { 
  
-
   const [zoom, setZoom] = useState(14); // Default zoom level
   const center = useMemo<LatLngLiteral>(()=>({lat:54.89,lng:23.9}),[]);
   const [directions, setDirections] = useState<DirectionsResult|null>(null);
@@ -61,8 +60,8 @@ export default function MapRoute({
   };
 
   const animateMarker = (startPos:any, endPos:any, distance:any, onComplete:any) => {
-    const frames = 120; // Number of frames in the animation
-    const durationPerKm = 5000; // Duration per km in milliseconds
+    const frames = 60; // Number of frames in the animation
+    const durationPerKm = 1000; // Duration per km in milliseconds
     const duration = distance * durationPerKm; // Duration based on distance
     const interval = duration / frames;
     let frame = 0;
@@ -107,14 +106,66 @@ export default function MapRoute({
             } else if (legIndex < legs.length - 1) {
               startAnimation(legs, legIndex + 1, 0);
             } else {
-              alert('Trip finished!');
+              onTripFinish();
             }
           }
         );
       }
     }
   };
-  
+
+  const onTripFinish = () => {
+    updateUserWallet();
+    setContext("Congrats"); // Show the modal when the trip finishes
+  };
+
+  const updateUserWallet = async () => {
+    const response = await fetch('/api/wallet/get');
+          if (response.ok) {
+            const data = await response.json();
+            if(data.id){
+              const userId = data.id
+              const increaseAmount = 1;
+            
+              try {
+                if(data.UserWallet){
+                  const currentWalletData = data.UserWallet
+                  
+                  if(directions){
+
+                    let aggregatedKM = 0;
+                    directions.routes[0].legs.forEach(leg => {
+                      if(leg.distance){
+                        aggregatedKM += leg.distance.value
+                      }
+                    });
+
+                    const updatedCo2Saved = currentWalletData.co2Saved + (aggregatedKM/1000 * 192);
+                    const updatedBalance = currentWalletData.balance + (aggregatedKM/1000);
+              
+                    await fetch('/api/wallet/update', {
+                      method: 'POST',
+                      headers: {
+                        'Content-Type': 'application/json',
+                      },
+                      body: JSON.stringify({ walletId:currentWalletData.id, co2Saved: updatedCo2Saved, balance: updatedBalance }),
+                    });
+                    
+                    document.dispatchEvent(new CustomEvent('walletUpdated'));
+                  }
+
+                  
+                }
+              } catch (error) {
+                // Handle errors for updating wallet
+              }
+            }
+            
+          } else {
+            // Handle errors
+          }
+  };
+
   const simulateTrip = useCallback(() => {
     if (directions) {
       const legs = directions.routes[0].legs;

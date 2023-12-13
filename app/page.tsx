@@ -5,6 +5,7 @@ import Questions from "../components/home/questions";
 import MapRoute from "../components/map/mapRoute";
 import {useState} from "react"
 import { useLoadScript } from "@react-google-maps/api";
+import CongratulationsModal from "../components/shared/CongratulationsModal"
 import { start } from "repl";
 interface LocationData {
   lat: number;
@@ -26,7 +27,6 @@ export default function Home() {
   if (!isLoaded) return <div>Loading...</div>;
   if (loadError) return <div>Error loading maps</div>;
   //return <Questions startPoint={{lat:40.748817, lng:-73.985428 }} endPoint={{lat:40.748817, lng:73.985428 }} setMainLocationData={setLocationData} setContext={setContext}></Questions>
-  
   switch(context){
     case "Start":
       return (<Start setContext={setContext}></Start>)
@@ -37,6 +37,8 @@ export default function Home() {
       return (<Questions startPoint={startLocation} endPoint={endLocation} setMainLocationData={setLocationData} setContext={setContext}></Questions>)
     case "Gathered":
       return (<MapRoute setContext={setContext} startLocation={startLocation} endLocation={endLocation} locationData={locationData}></MapRoute>)
+    case "Congrats":
+      return (<CongratulationsModal setContext={setContext}/>)
   } 
 }
 
