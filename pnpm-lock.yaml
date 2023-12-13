@@ -44,6 +44,9 @@ dependencies:
   '@vercel/og':
     specifier: ^0.0.26
     version: 0.0.26
+  canvas-confetti:
+    specifier: ^1.9.2
+    version: 1.9.2
   classnames:
     specifier: ^2.3.2
     version: 2.3.2
@@ -80,6 +83,9 @@ dependencies:
   react-dom:
     specifier: 18.2.0
     version: 18.2.0(react@18.2.0)
+  react-fireworks:
+    specifier: ^1.0.4
+    version: 1.0.4
   react-google-maps:
     specifier: ^9.4.5
     version: 9.4.5(@types/googlemaps@3.43.3)(@types/markerclustererplus@2.1.33)(@types/react@18.2.24)(react-dom@18.2.0)(react@18.2.0)
@@ -109,6 +115,9 @@ devDependencies:
   '@tailwindcss/typography':
     specifier: ^0.5.10
     version: 0.5.10(tailwindcss@3.3.3)
+  '@types/canvas-confetti':
+    specifier: ^1.6.4
+    version: 1.6.4
   '@types/html2canvas':
     specifier: ^1.0.0
     version: 1.0.0
@@ -1039,6 +1048,10 @@ packages:
       tailwindcss: 3.3.3
     dev: true
 
+  /@types/canvas-confetti@1.6.4:
+    resolution: {integrity: sha512-fNyZ/Fdw/Y92X0vv7B+BD6ysHL4xVU5dJcgzgxLdGbn8O3PezZNIJpml44lKM0nsGur+o/6+NZbZeNTt00U1uA==}
+    dev: true
+
   /@types/debug@4.1.9:
     resolution: {integrity: sha512-8Hz50m2eoS56ldRlepxSBa6PWEVCtzUo/92HgLc2qTMnotJNIm7xP+UZhyWoYsyOdd5dxZ+NZLb24rsKyFs2ow==}
     dependencies:
@@ -1475,6 +1488,10 @@ packages:
 
   /caniuse-lite@1.0.30001542:
     resolution: {integrity: sha512-UrtAXVcj1mvPBFQ4sKd38daP8dEcXXr5sQe6QNNinaPd0iA/cxg9/l3VrSdL73jgw5sKyuQ6jNgiKO12W3SsVA==}
+
+  /canvas-confetti@1.9.2:
+    resolution: {integrity: sha512-6Xi7aHHzKwxZsem4mCKoqP6YwUG3HamaHHAlz1hTNQPCqXhARFpSXnkC9TWlahHY5CG6hSL5XexNjxK8irVErg==}
+    dev: false
 
   /chalk@4.1.2:
     resolution: {integrity: sha512-oKnbhFyRIXpUuez8iBMmyEa4nbj4IOQyuhc/wy9kY7/WVPcwIO9VA668Pu8RkO7+0G76SLROeyw9CpQ061i4mA==}
@@ -3619,6 +3636,10 @@ packages:
       loose-envify: 1.4.0
       react: 18.2.0
       scheduler: 0.23.0
+    dev: false
+
+  /react-fireworks@1.0.4:
+    resolution: {integrity: sha512-jj1a+HTicB4pR6g2lqhVyAox0GTE0TOrZK2XaJFRYOwltgQWeYErZxnvU9+zH/blY+Hpmu9IKyb39OD3KcCMJw==}
     dev: false
 
   /react-google-maps@9.4.5(@types/googlemaps@3.43.3)(@types/markerclustererplus@2.1.33)(@types/react@18.2.24)(react-dom@18.2.0)(react@18.2.0):
