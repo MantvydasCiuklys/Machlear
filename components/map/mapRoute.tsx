@@ -118,7 +118,6 @@ export default function MapRoute({
     
     updateUserWallet();
     setContext("Congrats"); // Show the modal when the trip finishes
-    document.dispatchEvent(new CustomEvent('prepareWalletUpdate'));
   };
 
   const updateUserWallet = async () => {

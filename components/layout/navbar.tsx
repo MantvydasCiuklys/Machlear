@@ -82,22 +82,16 @@ export default function NavBar({ session }: { session: Session | null }) {
       fetchWalletData(); // Refetch wallet data
     };
 
-    const prepareWallet = () => {
-      setWallet(null)
-    }
-
-    document.addEventListener('prepareWalletUpdate', prepareWallet);
     document.addEventListener('walletUpdated', handleWalletUpdate);
   
     return () => {
-      document.addEventListener('prepareWalletUpdate', prepareWallet);
       document.removeEventListener('walletUpdated', handleWalletUpdate);
     };
   }, [fetchWalletData]);
 
   useEffect(() => {
     fetchWalletData();
-  }, [session, fetchWalletData]);
+  }, [session]);
 
 
 

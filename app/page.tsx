@@ -39,6 +39,8 @@ export default function Home() {
       return (<MapRoute setContext={setContext} startLocation={startLocation} endLocation={endLocation} locationData={locationData}></MapRoute>)
     case "Congrats":
       return (<CongratulationsModal setContext={setContext}/>)
+    case "Profile":
+      return (<CongratulationsModal setContext={setContext}/>)
   } 
 }
 

@@ -207,7 +207,7 @@ export default function Questions({
             </div>
                 {
                     sliderValue < 30 ?
-                    <div style={{textAlign: "center", marginLeft:"8%", fontSize:"40px", fontWeight:"bold", color:"red"}}> {/* Centers the text */}
+                    <div style={{textAlign: "center", marginLeft:"8%", fontSize:"40px", fontWeight:"bold", color:"#c98484"}}> {/* Centers the text */}
                         <p>{sliderValue}%</p>
                     </div>
                     :

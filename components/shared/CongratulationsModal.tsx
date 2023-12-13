@@ -12,6 +12,11 @@ export default function CongratulationsModal({
     const ExpressStartClicked = ()=>{
         setContext('Directions');
     }
+
+    const ProfileClicked = ()=>{
+      setContext('Profile');
+    }
+
     useEffect(() => {
       const canvas = refCanvas.current;
       if(canvas){
@@ -52,7 +57,7 @@ export default function CongratulationsModal({
         <div
         className={`relative col-span-4 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-md mainButtonProfile`}
         >
-            <div style={{width:"100%", height:"5vh"}} className="flex items-center justify-center" onClick={()=>{ExpressStartClicked()}}>Create Profile</div>
+            <div style={{width:"100%", height:"5vh"}} className="flex items-center justify-center" onClick={()=>{ProfileClicked()}}>Create Profile</div>
         </div>
         </div>
       </>

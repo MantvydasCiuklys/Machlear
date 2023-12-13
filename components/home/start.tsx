@@ -10,6 +10,10 @@ export default function Start({
     const ExpressStartClicked = ()=>{
         setContext('Directions');
     }
+    const ProfileClicked = ()=>{
+      setContext('Profile');
+    }
+
   return (
     <>
     <div className="z-14 w-full max-w-xl px-0 xl:px-0">
@@ -29,7 +33,7 @@ export default function Start({
     <div
       className={`relative col-span-4 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-md mainButtonProfile`}
     >
-        <div style={{width:"100%", height:"5vh"}} className="flex items-center justify-center" onClick={()=>{ExpressStartClicked()}}>Create Profile</div>
+        <div style={{width:"100%", height:"5vh"}} className="flex items-center justify-center" onClick={()=>{ProfileClicked()}}>Create Profile</div>
     </div>
     </div>
 
