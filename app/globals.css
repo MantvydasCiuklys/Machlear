@@ -372,6 +372,27 @@
 }
 
 
+@keyframes pulseAnimation {
+  0% { 
+    transform: scale(0.5); 
+    border: 2px solid transparent; 
+    border-color: rgb(130, 209, 245);
+  }
+  50% { 
+    transform: scale(1.1); 
+    margin-top:10%;
+    border: 6px solid; 
+    border-color: rgb(119, 252, 119);
+  }
+  100% { 
+    transform: scale(1); 
+  }
+}
+
+.pulse {
+  animation: pulseAnimation 1.5s ease-in-out;
+}
+
   @media (max-width: 480px) {
     /* Style for the WalletInformation container */
     .WalletInformation {

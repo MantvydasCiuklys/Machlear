@@ -17,6 +17,10 @@ export default function NavBar({ session }: { session: Session | null }) {
   const { SignInModal, setShowSignInModal } = useSignInModal();
   const scrolled = useScroll(50);
   const [wallet, setWallet] = useState<IWallet|null>(null);
+  const [isUpdatingBalance, setIsUpdatingBalance] = useState(false);
+  const [isUpdatingCO2, setIsUpdatingCO2] = useState(false);
+
+
 
   const fetchWalletData = async () => {
     if (session) {
@@ -26,10 +30,17 @@ export default function NavBar({ session }: { session: Session | null }) {
         if (response.ok) {
           const data = await response.json();
           if(data.UserWallet){
+            setIsUpdatingBalance(true);
+            setIsUpdatingCO2(true);
             setWallet({
                 Balance: data.UserWallet.balance,
                 CO2:data.UserWallet.co2Saved
               })
+
+            setTimeout(() => {
+              setIsUpdatingBalance(false);
+              setIsUpdatingCO2(false);
+            }, 2000); // duration of the animation
           }
           else {
             if(data.id){
@@ -111,14 +122,14 @@ export default function NavBar({ session }: { session: Session | null }) {
             (
               wallet ?
               (
-                <div className="WalletInformation">
-                  <div className="WalletEmissions">
-                    CO2 Saved: {<br></br>}{(wallet.CO2/1000).toFixed(2) ?? "0"}kg
+                <div className={`WalletInformation`}>
+                  <div className={`WalletEmissions ${isUpdatingCO2 ? 'pulse' : ''}`}>
+                    CO2 Saved: <br />{(wallet.CO2 / 1000).toFixed(2) ?? "0"}kg
                   </div>
-                  <div className="WalletBalance">
-                    Machlear Balance: {<br></br>}{wallet.Balance.toFixed(2) ?? "0"}$
+                  <div className={`WalletBalance ${isUpdatingBalance ? 'pulse' : ''}`}>
+                    Machlear Balance: <br />{wallet.Balance.toFixed(2) ?? "0"}$
                   </div>
-                </div> 
+                </div>
               ):
               <div>Loading...</div>
             ):
